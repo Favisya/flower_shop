@@ -1,0 +1,117 @@
+<%= link_to 'go back', bouquets_path %>
+<div>
+  current bouquet
+</div>
+<span>
+  address:
+  <%= @bouquet.address %>
+</span>
+<span>
+  number:
+  <%= @bouquet.number %>
+</span>
+<% if @bouquet.sold == false %>
+  <span style="color: red;">
+  is sold:
+    <%= @bouquet.sold %>
+</span>
+<% else %>
+  <span style="color: green;">
+  is sold:
+    <%= @bouquet.sold %>
+</span>
+<% end %>
+<span>
+  id:
+  <%= @bouquet.id %>
+</span>
+<div>
+  shop id:
+  <%= @bouquet.shop_id %>
+</div>
+
+<div>
+  full price is:
+  <%= @price %>
+  roubles
+</div>
+<% if @bouquet.sold == false %>
+  <%= link_to 'sold|not sold', sold_path, { controller: :bouquets, action: :sold } %>
+<% end %>
+<table class="table">
+  <thead>
+  <tr>
+    <% if @bouquet.sold == false %>
+      <th>flowers in bouquet
+        <%= link_to 'remove all', { controller: :bouquets, action: :remove_all } %>
+      </th>
+    <% else %>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @bouquet.flowers.each do |bouquet| %>
+    <tr>
+      <td>
+        Name:
+        <%= bouquet.name %>
+      </td>
+      <td>
+        Price:
+        <%= bouquet.price %>
+      </td>
+      <td>
+        Quanity:
+        <%if @bouquet.sold == false %>
+        <%= link_to '-', "http://localhost:3000/minus/" + bouquet.id.to_s, { controller: :bouquets, action: :minus } %>
+
+        <%= BouquetsFlowersJoin.find_by(flower_id: bouquet.id, bouquet_id: $current_bouquet.id).counter %>
+
+        <%= link_to '+', "http://localhost:3000/plus/" + bouquet.id.to_s, { controller: :bouquets, action: :plus } %>
+        <%else %>
+          <%= BouquetsFlowersJoin.find_by(flower_id: bouquet.id, bouquet_id: $current_bouquet.id).counter %>
+        <%end %>
+      </td>
+      <% if @bouquet.sold == false %>
+        <td>
+          <%= link_to 'remove', "http://localhost:3000/remove/" + bouquet.id.to_s, { controller: :bouquets, action: :remove } %>
+        </td>
+      <% else %>
+
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% if @bouquet.sold == false %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th> all flowers in stock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @flower.each do |flower| %>
+      <tr>
+        <td>
+          <%= flower.name %>
+        </td>
+        <td>
+          Price:
+          <%= flower.price %>
+        </td>
+        <td>
+          stock:
+          <%= flower.num %>
+        </td>
+        <td>
+          <%= link_to 'add', "http://localhost:3000/add/" + flower.id.to_s, { controller: :bouquets, action: :add_in_bouquet } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+
+<% end %>

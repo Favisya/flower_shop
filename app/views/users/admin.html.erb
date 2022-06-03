@@ -1,0 +1,66 @@
+<h1>
+  Admin panel
+</h1>
+<h1>
+  <%= link_to "Profile",profile_path %>
+  <%= link_to "Bouquets",bouquets_path %>
+</h1>
+<h1>
+  <%= @current_user.role.position %>
+  <%= @current_user.surname %>
+</h1>
+<span>
+  Уровень доступа:
+  <%= @current_user.role.access %>
+</span>
+<div>
+  <%=@current_user.shop_point %>
+</div>
+<h1>users in db</h1>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th> users</th>
+  </tr>
+  </thead>
+  <h2><%= link_to 'Create new user', new_user_path(@user) %></h2>
+  <tbody>
+  <% @user.each do |user| %>
+    <tr>
+      <td>
+        <%= user.role.position %>
+      </td>
+      <td>
+        <%= user.name %>
+      </td>
+      <td>
+        <%= user.surname %>
+      </td>
+      <td>
+        <%= user.login %>
+      </td>
+      <td>
+        <%= user.email %>
+      </td>
+      <td>
+        <%= user.id %>
+      </td>
+      <td>
+        <%= user.shop_point %>
+      </td>
+      <td>
+        <%= link_to 'edit', edit_user_path(user) %>
+      </td>
+      <td>
+        <% if @current_user != user %>
+        <%= button_to 'Delete', user, :method=> :delete, data:{confirm: 'are u sure?'} %>
+          <% else %>
+        <% button_to "Can't Delete urself" %>
+          <% end %>
+      </td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>

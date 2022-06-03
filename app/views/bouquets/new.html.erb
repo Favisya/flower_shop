@@ -1,0 +1,15 @@
+<%=form_for @bouquet, controller:'bouquets',action:'create'  do |f|  %>
+  <div style="display: flex;flex-direction: column;width: 50%">
+    <%=f.label :name %>
+    <%= f.text_field :name%>
+
+    <%=f.label :address %>
+    <%= f.text_field :address%>
+
+    <%=f.label :number %>
+    <%= f.text_field :number%>
+
+    <%= f.submit "Create" %>
+  </div>
+
+<%end %>

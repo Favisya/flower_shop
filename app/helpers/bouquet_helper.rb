@@ -1,0 +1,2 @@
+module BouquetHelper
+end

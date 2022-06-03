@@ -1,0 +1,33 @@
+<h1> Registration</h1>
+<%= form_for @user, controller: 'users', action: 'create' do |f| %>
+  <div style="display: flex;flex-direction: column;width: 50%">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+    <%= f.label :surname %>
+    <%= f.text_field :surname %>
+
+    <%= f.label :login %>
+    <%= f.text_field :login %>
+
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+
+    <% if @current_user.role.access == 1 %>
+      <%= f.select :role_id, [["Full admin", "1"], ["Shop admin", "2"], ["Flower expert", "3"]] %>
+    <% else %>
+      <%= f.select :role_id, [["Shop admin", "2"], ["Flower expert", "3"]]%>
+      <%end %>
+      <% #f.label :role_id %>
+      <% #f.text_field :role_id %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+
+      <%= f.submit "Create" %>
+      </div>
+
+    <% end %>

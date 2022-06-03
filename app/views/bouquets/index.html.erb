@@ -1,0 +1,55 @@
+<h1><%= link_to "go back",admin_path %></h1>
+
+
+<h2><%= link_to "create new bouquet",new_bouquet_path %></h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>bouquets</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @bouquet.each do |bouquet| %>
+    <tr>
+      <td>
+        Id:
+        <%= bouquet.id %>
+      </td>
+      <td>
+        Name:
+        <%= bouquet.name %>
+      </td>
+      <td>
+        address:
+        <%= bouquet.address %>
+      </td>
+      <td>
+        Phone number:
+        <%= bouquet.number %>
+      </td>
+      <td>
+        <% if bouquet.sold == false %>
+          <span style="color: darkslategray">
+            Not sold
+          </span>
+        <%else %>
+        <span style="color: green">
+            Sold
+          </span>
+        <%end %>
+      </td>
+      <td>
+        <%= bouquet.id %>
+      </td>
+      <td>
+        <%= link_to "show", bouquet_path(bouquet)  %>
+      </td>
+      <td>
+        <%if bouquet.sold == false %>
+        <%= button_to 'Destroy', bouquet_path(bouquet), :method=> :delete, data:{confirm: 'are u sure?'} %>
+          <%end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

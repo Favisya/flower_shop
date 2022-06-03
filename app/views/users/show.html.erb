@@ -1,0 +1,24 @@
+<h1>
+  Профиль
+</h1>
+<h2>
+  Role: <%=@current_user.role.position %>
+</h2>
+<span>
+  Name: <%=@current_user.name %>
+  Surname: <%=@current_user.surname %>
+</span>
+<div>
+  Login: <%=@current_user.login %>
+</div>
+<div>
+  Email: <%=@current_user.email %>
+</div>
+<div>
+  Id: <%=@current_user.id %>
+</div>
+<div>
+  Shop id: <%=@current_user.shop_point %>
+</div>
+<%= link_to "Sign out", sessions_path, method:"delete" %>
+<%= link_to 'admin panel', admin_url %>

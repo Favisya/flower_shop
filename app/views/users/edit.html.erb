@@ -1,0 +1,21 @@
+<h1> Registration</h1>
+<%=form_for @user, controller:'users',action:'update'  do |f|  %>
+  <div style="display: flex;flex-direction: column;width: 50%">
+    <%=f.label :name %>
+    <%= f.text_field :name%>
+
+    <%=f.label :surname %>
+    <%= f.text_field :surname%>
+
+    <%=f.label :login %>
+    <%= f.text_field :login%>
+
+    <%=f.label :email %>
+    <%= f.text_field :email%>
+
+    <%=f.label :password %>
+    <%= f.text_field :password%>
+    <%= f.submit "Change" %>
+  </div>
+
+<%end %>
