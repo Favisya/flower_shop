@@ -5,10 +5,11 @@ Rails.application.routes.draw do
   resources :sessions
   resources :bouquets
   jsonapi_resources :flowers
-  # get '/bouquets/:id/add', to: 'bouquets#add_in_bouquet'
+  root to: 'sessions#new'
   get '/plus/:id', action: :plus, controller: 'bouquets'
   get '/minus/:id', action: :minus, controller: 'bouquets'
-  get '/add/:id', action: :add_in_bouquet, controller: 'bouquets'
+  # get '/add/:id', action: :add_in_bouquet, controller: 'bouquets'
+  get '/add/:id', to: 'bouquets#add_in_bouquet'
   get 'sold', action: :sold, controller: 'bouquets'
   get 'removeall', action: :remove_all, controller: 'bouquets'
   get '/remove/:id', action: :remove, controller: 'bouquets'

@@ -36,7 +36,7 @@
   roubles
 </div>
 <% if @bouquet.sold == false %>
-  <%= link_to 'sold|not sold', sold_path, { controller: :bouquets, action: :sold } %>
+  <%= link_to 'sold', { controller: :bouquets, action: :sold } %>
 <% end %>
 <table class="table">
   <thead>
@@ -61,20 +61,20 @@
         <%= bouquet.price %>
       </td>
       <td>
-        Quanity:
-        <%if @bouquet.sold == false %>
-        <%= link_to '-', "http://localhost:3000/minus/" + bouquet.id.to_s, { controller: :bouquets, action: :minus } %>
+        Quatnity:
+        <% if @bouquet.sold == false %>
+          <%= link_to '-', "/minus/" + bouquet.id.to_s, { controller: :bouquets, action: :minus } %>
 
-        <%= BouquetsFlowersJoin.find_by(flower_id: bouquet.id, bouquet_id: $current_bouquet.id).counter %>
-
-        <%= link_to '+', "http://localhost:3000/plus/" + bouquet.id.to_s, { controller: :bouquets, action: :plus } %>
-        <%else %>
           <%= BouquetsFlowersJoin.find_by(flower_id: bouquet.id, bouquet_id: $current_bouquet.id).counter %>
-        <%end %>
+
+          <%= link_to '+', "/plus/" + bouquet.id.to_s, { controller: :bouquets, action: :plus } %>
+        <% else %>
+          <%= BouquetsFlowersJoin.find_by(flower_id: bouquet.id, bouquet_id: $current_bouquet.id).counter %>
+        <% end %>
       </td>
       <% if @bouquet.sold == false %>
         <td>
-          <%= link_to 'remove', "http://localhost:3000/remove/" + bouquet.id.to_s, { controller: :bouquets, action: :remove } %>
+          <%= link_to 'remove', "/remove/" + bouquet.id.to_s, { controller: :bouquets, action: :remove } %>
         </td>
       <% else %>
 
@@ -85,6 +85,14 @@
 </table>
 
 <% if @bouquet.sold == false %>
+  <h3>
+    Find flower
+  </h3>
+  <%= form_tag bouquet_path, :method => "get" do %>
+    <%= label_tag(:search, "What flower would you like to add: ") %>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag("Search", :name => nil) %>
+  <% end %>
   <table class="table">
     <thead>
     <tr>
@@ -92,7 +100,7 @@
     </tr>
     </thead>
     <tbody>
-    <% @flower.each do |flower| %>
+    <% @finder.each do |flower| %>
       <tr>
         <td>
           <%= flower.name %>
@@ -106,12 +114,12 @@
           <%= flower.num %>
         </td>
         <td>
-          <%= link_to 'add', "http://localhost:3000/add/" + flower.id.to_s, { controller: :bouquets, action: :add_in_bouquet } %>
+          <%= link_to 'add', "/add/" + flower.id.to_s, { controller: :bouquets, action: :add_in_bouquet } %>
         </td>
       </tr>
     <% end %>
     </tbody>
   </table>
-<% else %>
+
 
 <% end %>

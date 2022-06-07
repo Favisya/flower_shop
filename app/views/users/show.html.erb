@@ -20,5 +20,5 @@
 <div>
   Shop id: <%=@current_user.shop_point %>
 </div>
-<%= link_to "Sign out", sessions_path, method:"delete" %>
+<%= link_to "Sign out", sessions_path, :method=> :delete %>
 <%= link_to 'admin panel', admin_url %>
