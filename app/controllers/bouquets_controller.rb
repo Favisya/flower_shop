@@ -38,7 +38,7 @@ class BouquetsController < ApplicationController
 
     i = 0
     @flower = Flower.all
-    while i <@flower.size do
+    while i < @flower.size do
       Flower.find_by(flower_id: response["rows"][i]["id"]).update_attribute(:num, response["rows"][i]["stock"])
       i += 1
     end
@@ -82,10 +82,10 @@ class BouquetsController < ApplicationController
 
   def plus
     @flower = Flower.find(params[:id])
-    if BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id).counter + 1 != @flower.num
-    newCount = BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id).counter + 1
-    object = BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id)
-    object.update_attribute(:counter, newCount)
+    if BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id).counter < @flower.num
+      newCount = BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id).counter + 1
+      object = BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id)
+      object.update_attribute(:counter, newCount)
     end
     redirect_to ($current_bouquet)
   end
@@ -118,11 +118,12 @@ class BouquetsController < ApplicationController
 
   def add_in_bouquet
     @flower = Flower.find(params[:id])
-    if $current_bouquet.flowers.include?(@flower)
-    else
-      $current_bouquet.flowers << @flower
+    if @flower.num > 0
+      if $current_bouquet.flowers.include?(@flower)
+      else
+        $current_bouquet.flowers << @flower
+      end
     end
-
     redirect_to($current_bouquet)
   end
 
@@ -151,12 +152,12 @@ class BouquetsController < ApplicationController
     if $current_bouquet.sold == true
       #$current_bouquet.update_attribute(:sold, false)
     else
-    positions = '['
-    size = $current_bouquet.flowers.size
-    i = 0
-    while i < size do
-      quantity = BouquetsFlowersJoin.find_by(flower_id: $current_bouquet.flowers[i].id, bouquet_id: $current_bouquet.id).counter
-      positions += '{
+      positions = '['
+      size = $current_bouquet.flowers.size
+      i = 0
+      while i < size do
+        quantity = BouquetsFlowersJoin.find_by(flower_id: $current_bouquet.flowers[i].id, bouquet_id: $current_bouquet.id).counter
+        positions += '{
           "quantity": ' + quantity.to_s; positions += ',
           "price": ' + $current_bouquet.flowers[i].price.to_s; positions += '00,
         "assortment" : {
@@ -168,89 +169,88 @@ class BouquetsController < ApplicationController
       },
       "reserve": ' + quantity.to_s; positions += '
       }'
-      if i != size - 1
-        positions += ','
+        if i != size - 1
+          positions += ','
+        end
+
+        i += 1
       end
+      positions += ']'
 
-      i += 1
-    end
-    positions += ']'
+      puts "flag1"
+      puts positions.to_s
+      @Position_Request = positions.to_s
+      #puts @Position_Request
 
-    puts "flag1"
-    puts positions.to_s
-    @Position_Request = positions.to_s
-    #puts @Position_Request
+      auth = { username: 'admin@favis', password: 'f38341fce0' } #here change authentication
+      @query = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/customerorder', basic_auth: auth, :body => {
+        "organization": {
+          "meta": {
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
+            "type": "organization",
+            "mediaType": "application/json"
+          }
+        },
+        "shipmentAddress": $current_bouquet.address.to_s,
+        "description": "Номер: " + $current_bouquet.number.to_s + " Имя: " + $current_bouquet.name.to_s,
+        "applicable": true,
+        "vatEnabled": false,
+        "agent": {
+          "meta": {
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change organization id
+            "type": "counterparty",
+            "mediaType": "application/json"
+          }
+        },
+        "positions":
+          JSON.parse(@Position_Request)
+      }.to_json, :headers => {
+        "Content-Type": "application/json"
+      },)
+      order_id = @query['meta']['href']
+      puts order_id
 
-    auth = { username: 'admin@favis', password: 'f38341fce0' } #here change authentication
-    @query = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/customerorder', basic_auth: auth, :body => {
-      "organization": {
-        "meta": {
-          "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
-          "type": "organization",
-          "mediaType": "application/json"
-        }
-      },
-      "shipmentAddress": $current_bouquet.address.to_s,
-      "description": "Номер: "+$current_bouquet.number.to_s + " Имя: " + $current_bouquet.name.to_s,
-      "applicable": true,
-      "vatEnabled": false,
-      "agent": {
-        "meta": {
-          "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change organization id
-          "type": "counterparty",
-          "mediaType": "application/json"
-        }
-      },
-      "positions":
-        JSON.parse(@Position_Request)
-    }.to_json, :headers => {
-      "Content-Type": "application/json"
-    },)
-    order_id = @query['meta']['href']
-    puts order_id
-
-    @transportQuery = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/demand', basic_auth: auth, :body => {
-      "organization": {
-        "meta": {
-          "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
-          "type": "organization",
-          "mediaType": "application/json"
-        }
-      },
-      "shipmentAddress": $current_bouquet.address.to_s,
-      "description": "Номер: "+$current_bouquet.number.to_s + "Имя: " + $current_bouquet.name.to_s,
-      "applicable": true,
-      "vatEnabled": false,
-      "agent": {
-        "meta": {
-          "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change organization id
-          "type": "counterparty",
-          "mediaType": "application/json"
-        }
-      },
-      "store": {
-        "meta": {
-          "href": "https://online.moysklad.ru/api/remap/1.2/entity/store/943572cc-dd05-11ec-0a80-02a70012a378",
-          "type": "store",
-          "mediaType": "application/json"
-        }
-      },
-      "vatIncluded": true,
-      "customerOrder": {
-        "meta": {
-          "href": order_id.to_s,
-          "type": "customerorder",
-          "mediaType": "application/json"
-        }
-      },
-      "positions":
-        JSON.parse(@Position_Request)
-    }.to_json, :headers => {
-      "Content-Type": "application/json"
-    },)
-    puts "flag4"
-    puts @transportQuery.to_s
-
+      @transportQuery = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/demand', basic_auth: auth, :body => {
+        "organization": {
+          "meta": {
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
+            "type": "organization",
+            "mediaType": "application/json"
+          }
+        },
+        "shipmentAddress": $current_bouquet.address.to_s,
+        "description": "Номер: " + $current_bouquet.number.to_s + "Имя: " + $current_bouquet.name.to_s,
+        "applicable": true,
+        "vatEnabled": false,
+        "agent": {
+          "meta": {
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change organization id
+            "type": "counterparty",
+            "mediaType": "application/json"
+          }
+        },
+        "store": {
+          "meta": {
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/store/943572cc-dd05-11ec-0a80-02a70012a378",
+            "type": "store",
+            "mediaType": "application/json"
+          }
+        },
+        "vatIncluded": true,
+        "customerOrder": {
+          "meta": {
+            "href": order_id.to_s,
+            "type": "customerorder",
+            "mediaType": "application/json"
+          }
+        },
+        "positions":
+          JSON.parse(@Position_Request)
+      }.to_json, :headers => {
+        "Content-Type": "application/json"
+      },)
+      puts "flag4"
+      puts @transportQuery.to_s
 
       $current_bouquet.update_attribute(:sold, true)
 
@@ -276,7 +276,7 @@ class BouquetsController < ApplicationController
   private
 
   def flower_params
-    params[:flower].permit(:flower_id, :name, :price, :ean13, :uuid, :code, :outCode, :num,:search)
+    params[:flower].permit(:flower_id, :name, :price, :ean13, :uuid, :code, :outCode, :num, :search)
   end
 
   def find_bouquet
