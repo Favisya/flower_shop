@@ -192,7 +192,7 @@ class BouquetsController < ApplicationController
       },
       "shipmentAddress": $current_bouquet.address.to_s,
       "description": "Номер: "+$current_bouquet.number.to_s + " Имя: " + $current_bouquet.name.to_s,
-      "applicable": false,
+      "applicable": true,
       "vatEnabled": false,
       "agent": {
         "meta": {
@@ -219,7 +219,7 @@ class BouquetsController < ApplicationController
       },
       "shipmentAddress": $current_bouquet.address.to_s,
       "description": "Номер: "+$current_bouquet.number.to_s + "Имя: " + $current_bouquet.name.to_s,
-      "applicable": false,
+      "applicable": true,
       "vatEnabled": false,
       "agent": {
         "meta": {
