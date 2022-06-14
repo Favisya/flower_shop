@@ -1,21 +1,26 @@
-<h1> Edit user</h1>
-<%=form_for @user, controller:'users',action:'update'  do |f|  %>
-  <div style="display: flex;flex-direction: column;width: 50%">
-    <%=f.label :name %>
-    <%= f.text_field :name%>
+<div class="form">
+  <h1> Новый сотрудник</h1>
+  <%= form_for @user, controller: 'users', action: 'update' do |f| %>
+    <div class="form_items">
+      <%= f.label :Имя %>
+      <%= f.text_field :name %>
 
-    <%=f.label :surname %>
-    <%= f.text_field :surname%>
+      <%= f.label :Фамилия %>
+      <%= f.text_field :surname %>
 
-    <%=f.label :login %>
-    <%= f.text_field :login%>
+      <%= f.label :Логин %>
+      <%= f.text_field :login %>
 
-    <%=f.label :email %>
-    <%= f.text_field :email%>
+      <%= f.label :Почта %>
+      <%= f.text_field :email %>
 
-    <%=f.label :password %>
-    <%= f.text_field :password%>
-    <%= f.submit "Change" %>
-  </div>
+      <%= f.label :Пароль %>
+      <%= f.text_field :password %>
+      <span>
+      <%= f.submit "Создать", :class => 'link' %>
+        <%= link_to "Отмена", admin_path, :class => 'link_negative' %>
+    </span>
+    </div>
 
-<%end %>
+  <% end %>
+</div>

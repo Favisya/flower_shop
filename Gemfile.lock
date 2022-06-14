@@ -280,7 +280,7 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   therubyracer
-  turbo-rails
+  turbo-rails (~> 1.0.0)
   tzinfo-data
   uuid (~> 2.3, >= 2.3.9)
   web-console

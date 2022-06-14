@@ -1,4 +1,4 @@
-<%= link_to 'Go back', bouquets_path %>
+<%= link_to 'Go back', bouquets_path, :class => 'link' %>
 <div>
   current bouquet
 </div>
@@ -36,18 +36,25 @@
   roubles
 </div>
 <% if @bouquet.sold == false %>
-  <%= link_to 'sold', { controller: :bouquets, action: :sold } %>
+  <%= link_to 'sold', { controller: :bouquets, action: :sold }, :class => 'link' %>
 <% end %>
+<% if @bouquet.sold == false %>
+  <%= link_to 'remove all', { controller: :bouquets, action: :remove_all }, :class => 'link' %>
+  <%= link_to 'save', "/save/" + @bouquet.id.to_s, { controller: :bouquets, action: :save, :class => 'link' } %>
+<% else %>
+<% end %>
+
 <table class="table">
   <thead>
   <tr>
+    <th> Цветок</th>
+    <th> Цена</th>
+    <th> Количество</th>
     <% if @bouquet.sold == false %>
-      <th>flowers in bouquet
-        <%= link_to 'remove all', { controller: :bouquets, action: :remove_all } %>
-        <%= link_to 'save', "/save/" + @bouquet.id.to_s, { controller: :bouquets, action: :save } %>
-      </th>
-    <% else %>
-    <% end %>
+    <th> Добавить</th>
+    <th> Удалить</th>
+      <%end %>
+    </th>
   </tr>
   </thead>
   <tbody>
@@ -57,17 +64,15 @@
         <%= flower.name %>
       </td>
       <td>
-        Price:
         <%= flower.price %>
       </td>
-      <td>
-        Quantity:
+      <td style="justify-content: center">
         <% if @bouquet.sold == false %>
-          <%= link_to '-', "/minus/" + flower.id.to_s, { controller: :bouquets, action: :minus } %>
+          <%= link_to '-', "/minus/" + flower.id.to_s, { controller: :bouquets, action: :minus, :class => 'link' } %>
 
           <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
 
-          <%= link_to '+', "/plus/" + flower.id.to_s, { controller: :bouquets, action: :plus } %>
+          <%= link_to '+', "/plus/" + flower.id.to_s, { controller: :bouquets, action: :plus, :class => 'link' } %>
         <% else %>
           <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
         <% end %>
@@ -78,7 +83,7 @@
           <%= flower.num - @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
         </td>
         <td>
-          <%= link_to 'remove', "/remove/" + flower.id.to_s, { controller: :bouquets, action: :remove } %>
+          <%= link_to 'remove', "/remove/" + flower.id.to_s, { controller: :bouquets, action: :remove, :class => 'link_negative' } %>
         </td>
       <% else %>
 
@@ -95,12 +100,15 @@
   <%= form_tag bouquet_path, :method => "get" do %>
     <%= label_tag(:search, "What flower would you like to add: ") %>
     <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag("Search", :name => nil) %>
+    <%= submit_tag("Search", :name => nil, :class => 'link') %>
   <% end %>
   <table class="table">
     <thead>
     <tr>
-      <th> all flowers in stock</th>
+      <th> Цветок</th>
+      <th> Цена</th>
+      <th> Количество на складе</th>
+      <th> Добавить</th>
     </tr>
     </thead>
     <tbody>
@@ -110,15 +118,13 @@
           <%= flower.name %>
         </td>
         <td>
-          Price:
           <%= flower.price %>
         </td>
         <td>
-          stock:
           <%= flower.num %>
         </td>
         <td>
-          <%= link_to 'add', "/add/" + flower.id.to_s, { controller: :bouquets, action: :add_in_bouquet } %>
+          <%= link_to 'add', "/add/" + flower.id.to_s, { controller: :bouquets, action: :add_in_bouquet, :class => 'link' } %>
         </td>
       </tr>
     <% end %>

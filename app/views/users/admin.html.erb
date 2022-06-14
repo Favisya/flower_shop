@@ -1,30 +1,32 @@
-<h1>
-  Admin panel
-</h1>
-<h1>
-  <%= link_to "Profile",profile_path %>
-  <%= link_to "Bouquets",bouquets_path %>
-</h1>
-<h1>
-  <%= @current_user.role.position %>
-  <%= @current_user.surname %>
-</h1>
+<h2>
+  <%= link_to "Профиль",profile_path, :class => 'link' %>
+  <%= link_to "Букеты",bouquets_path, :class => 'link' %>
+</h2>
+
 <span>
   Уровень доступа:
   <%= @current_user.role.access %>
 </span>
 <div>
-  <%=@current_user.shop_point %>
+  ID точки: <%=@current_user.shop_point %>
 </div>
-<h1>users in db</h1>
+<h2>Сотрудники <%= link_to 'Создать нового сотрудника', new_user_path(@user), :class => 'link' %></h2>
 
 <table class="table">
   <thead>
   <tr>
-    <th> users</th>
+    <th> Должность</th>
+    <th> Имя</th>
+    <th> Фамилия</th>
+    <th> Логин</th>
+    <th> Почта</th>
+    <th> ID пользователя</th>
+    <th> ID точки</th>
+    <th> Редактировать</th>
+    <th> Удалить</th>
+
   </tr>
   </thead>
-  <h2><%= link_to 'Create new user', new_user_path(@user) %></h2>
   <tbody>
   <% @user.each do |user| %>
     <tr>
@@ -50,11 +52,11 @@
         <%= user.shop_point %>
       </td>
       <td>
-        <%= link_to 'edit', edit_user_path(user) %>
+        <%= link_to 'Редактировать', edit_user_path(user), :class => 'link' %>
       </td>
       <td>
         <% if @current_user != user %>
-        <%= button_to 'Delete', user, :method=> :delete, data:{confirm: 'are u sure?'} %>
+        <%= button_to 'Удалить сотрудника', user, :method=> :delete, data:{confirm: 'are u sure?'}, :class => 'link_negative' %>
           <% else %>
 
           <% end %>

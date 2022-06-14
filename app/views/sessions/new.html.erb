@@ -1,8 +1,30 @@
-<%= form_with url: sessions_path do |f| %>
-  <%= f.label :login %>
-  <%= f.text_field :login %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Myapp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-  <%= f.submit "Sign In!" %>
-<% end %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
+
+<body>
+<div class="main">
+  <%= form_with url: sessions_path do |f| %>
+
+    <%= f.label :Логин %>
+    <%= f.text_field :login %>
+
+    <%= f.label :Пароль %>
+    <%= f.password_field :password %>
+
+    <%= f.submit "Войти" ,:class =>'link' %>
+
+    </div>
+  <% end %>
+  </div>
+</div>
+</body>
+</html>

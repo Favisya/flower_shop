@@ -1,26 +1,48 @@
-<h1>
-  Профиль
-</h1>
-<h2>
-  Role: <%=@current_user.role.position %>
-</h2>
-<span>
-  Name: <%=@current_user.name %>
-  Surname: <%=@current_user.surname %>
-</span>
-<div>
-  Login: <%=@current_user.login %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Myapp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
+
+<body>
+<div class="main">
+  <div style="padding: 30px">
+    <h1>
+      <span>
+        Профиль
+        <%= button_to "Выйти", logout_path, :method => :delete, :class => 'link' %>
+      </span>
+    </h1>
+    <h2>
+      Должность: <%= @current_user.role.position %>
+    </h2>
+    <span>
+        Имя: <%= @current_user.name %>
+      Фамилия: <%= @current_user.surname %>
+    </span>
+    <div>
+      Логин: <%= @current_user.login %>
+    </div>
+    <div>
+      Email: <%= @current_user.email %>
+    </div>
+    <div>
+      ID точки: <%= @current_user.shop_point %>
+    </div>
+    <div style="justify-content:space-between;flex-direction: row;margin-top: 10px">
+
+      <%= link_to 'Сотрудники', admin_url, :class => 'link' %>
+
+      <%= link_to 'Букеты', bouquets_path, :class => 'link' %>
+    </div>
+
+  </div>
 </div>
-<div>
-  Email: <%=@current_user.email %>
-</div>
-<div>
-  session: <%=session[@current_user.id] %>
-  Id: <%=@current_user.id %>
-</div>
-<div>
-  Shop id: <%=@current_user.shop_point %>
-</div>
-<%= button_to "Log out", logout_path, :method=> :delete %>
-<%= link_to 'admin panel', admin_url %>
-<%= link_to 'Bouquets', bouquets_path %>
+</body>
+</html>

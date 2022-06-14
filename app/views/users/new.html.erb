@@ -1,33 +1,36 @@
-<h1> New User</h1>
-<%= form_for @user, controller: 'users', action: 'create' do |f| %>
-  <div style="display: flex;flex-direction: column;width: 50%">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+<div class="form">
+  <h1> Новый сотрудник</h1>
+  <%= form_for @user, controller: 'users', action: 'create' do |f| %>
+    <div class="form_items">
+      <%= f.label :Имя %>
+      <%= f.text_field :name %>
 
-    <%= f.label :surname %>
-    <%= f.text_field :surname %>
+      <%= f.label :Фамилия %>
+      <%= f.text_field :surname %>
 
-    <%= f.label :login %>
-    <%= f.text_field :login %>
+      <%= f.label :Логин %>
+      <%= f.text_field :login %>
 
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+      <%= f.label :Почта %>
+      <%= f.text_field :email %>
 
-    <% if @current_user.role.access == 1 %>
-      <%= f.select :role_id, [["Full admin", "1"], ["Shop admin", "2"], ["Flower expert", "3"]] %>
-    <% else %>
-      <%= f.select :role_id, [["Shop admin", "2"], ["Flower expert", "3"]]%>
-      <%end %>
-      <% #f.label :role_id %>
-      <% #f.text_field :role_id %>
+      <%= f.label :Должность %>
+      <% if @current_user.role.access == 1 %>
+        <%= f.select :role_id, [["Главный администратор", "1"], ["Управляющий", "2"], ["Флорист", "3"]] %>
+      <% else %>
+        <%= f.select :role_id, [["Управляющий", "2"], ["Флорист", "3"]] %>
+      <% end %>
 
-      <%= f.label :password %>
+      <%= f.label :Пароль %>
       <%= f.password_field :password %>
 
-      <%= f.label :password_confirmation %>
+      <%= f.label :Потверждение %>
       <%= f.password_field :password_confirmation %>
+    <span>
+      <%= f.submit "Создать", :class => 'link' %>
+      <%= link_to "Отмена", admin_path, :class => 'link_negative' %>
+    </span>
+    </div>
 
-      <%= f.submit "Create" %>
-      </div>
-
-    <% end %>
+  <% end %>
+</div>

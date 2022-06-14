@@ -1,28 +1,42 @@
-<h1><%= link_to "Admin panel",admin_path %></h1>
-<h2><%= link_to "create new bouquet",new_bouquet_path %></h2>
+<h2 style="justify-content: center;justify-items: auto">
+  <%= link_to "Профиль",profile_path, :class => 'link' %>
+  <%= link_to "Сотрудники", admin_path, :class => 'link' %>
+  <%= link_to "Новый Букет", new_bouquet_path, :class => 'link' %>
+
+</h2>
 <table class="table">
   <thead>
   <tr>
-    <th>bouquets</th>
+    <th>ID</th>
+    <th>Время создания</th>
+    <th>Имя заказчика</th>
+    <th>Адрес заказчика</th>
+    <th>Номер телефона</th>
+    <th>Продан?</th>
+    <th>Показать</th>
+    <th>Удалить</th>
   </tr>
   </thead>
   <tbody>
   <% @bouquet.each do |bouquet| %>
     <tr>
       <td>
-        Id:
+
         <%= bouquet.id %>
       </td>
       <td>
-        Name:
+        <%= bouquet.created_at %>
+      </td>
+      <td>
+
         <%= bouquet.name %>
       </td>
       <td>
-        address:
+
         <%= bouquet.address %>
       </td>
       <td>
-        Phone number:
+
         <%= bouquet.number %>
       </td>
       <td>
@@ -30,22 +44,19 @@
           <span style="color: darkslategray">
             Not sold
           </span>
-        <%else %>
+        <% else %>
         <span style="color: green">
             Sold
           </span>
-        <%end %>
+        <% end %>
       </td>
       <td>
-        <%= bouquet.id %>
+        <%= link_to "show", bouquet_path(bouquet), :class => 'link' %>
       </td>
       <td>
-        <%= link_to "show", bouquet_path(bouquet)  %>
-      </td>
-      <td>
-        <%if bouquet.sold == false %>
-        <%= button_to 'Destroy', bouquet_path(bouquet), :method=> :delete, data:{confirm: 'are u sure?'} %>
-          <%end %>
+        <% if bouquet.sold == false %>
+          <%= button_to 'Destroy', bouquet_path(bouquet), :method => :delete, data: { confirm: 'are u sure?' }, :class => 'link_negative' %>
+        <% end %>
       </td>
     </tr>
   <% end %>

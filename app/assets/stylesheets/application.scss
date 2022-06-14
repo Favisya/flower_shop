@@ -11,3 +11,106 @@
  * It is generally better to create a new file per style scope.
  *
  */
+
+body{
+  width: 100%;
+  height: 99%;
+  background: #efefef;
+  position: relative;
+}
+
+.main{
+  margin:200px 600px;
+  background: #d8d8d8;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.form{
+  position: relative;
+  margin: 100px auto;
+  width: 60%;
+  height: 70%;
+  background: #d8d8d8;
+  border-radius: 20px;
+  flex-direction: column;
+  padding: 30px;
+}
+.form_items{
+  justify-content: center;
+ justify-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.link{
+  margin: 5px 0;
+  text-align: left;
+  color: black;
+  text-decoration: none;
+  background: white;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px black solid;
+  position: relative;
+  font-size: 14px;
+}
+.link:hover{
+  transition: .3s ease-in-out;
+  background: #d9ded9;
+}
+
+.link_negative{
+  margin: 5px 0;
+  text-align: left;
+  color: black;
+  text-decoration: none;
+  background: white;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px black solid;
+  position: relative;
+}
+.link_negative:hover{
+  transition: .3s ease-in-out;
+  background: indianred;
+}
+
+
+.table {
+  width: 100%;
+  border: none;
+  margin-bottom: 20px;
+}
+.table thead th {
+  font-weight: bold;
+  text-align: left;
+  border: none;
+  padding: 10px 15px;
+  background: #d8d8d8;
+  font-size: 14px;
+}
+.table thead tr th:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.table thead tr th:last-child {
+  border-radius: 0 8px 8px 0;
+}
+.table tbody td {
+  text-align: left;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  vertical-align: top;
+}
+.table tbody tr:nth-child(even){
+  background: #d8d8d8;
+}
+.table tbody tr td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.table tbody tr td:last-child {
+  border-radius: 0 8px 8px 0;
+}

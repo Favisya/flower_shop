@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   if flag == 0
     i = 1
-    array = ["", "Main admin", "Shop admin", "Flower expert"]
+    array = ["", "Главный Администратор", "Управляющий", "Флорист"]
     while i < 4
 
       role = Role.new

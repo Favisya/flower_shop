@@ -102,6 +102,14 @@ class BouquetsController < ApplicationController
     redirect_to ($current_bouquet)
   end
 
+  def update
+    if @counters.update(join_params)
+      redirect_to redirect_to ($current_bouquet)
+    else
+      render :show
+    end
+  end
+
   def save
     @bouquet = Bouquet.find(params[:id])
     objects = BouquetsFlowersJoin.where(bouquet_id: @bouquet.id)
@@ -293,4 +301,9 @@ class BouquetsController < ApplicationController
   def find_flower
     @flower = Flower.find(params[:id])
   end
+
+  def join_params
+    params[:BouquetsFlowersJoin].permit(:counter)
+  end
+
 end
