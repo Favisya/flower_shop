@@ -59,7 +59,7 @@ body{
 }
 .link:hover{
   transition: .3s ease-in-out;
-  background: #d9ded9;
+  background: #d8d8d8;
 }
 
 .link_negative{
@@ -72,6 +72,7 @@ body{
   border-radius: 3px;
   border: 1px black solid;
   position: relative;
+  font-size: 14px;
 }
 .link_negative:hover{
   transition: .3s ease-in-out;

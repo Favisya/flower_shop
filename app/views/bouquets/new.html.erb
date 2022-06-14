@@ -1,15 +1,21 @@
-<%=form_for @bouquet, controller:'bouquets',action:'create'  do |f|  %>
-  <div style="display: flex;flex-direction: column;width: 50%">
-    <%=f.label :name %>
-    <%= f.text_field :name%>
+<div class="form">
+  <h1> Новый сотрудник</h1>
+  <%= form_for @bouquet, controller: 'bouquets', action: 'create' do |f| %>
+    <div class="form_items">
+      <%= f.label :Имя %>
+      <%= f.text_field :name %>
 
-    <%=f.label :address %>
-    <%= f.text_field :address%>
+      <%= f.label :Адрес %>
+      <%= f.text_field :address %>
 
-    <%=f.label :number %>
-    <%= f.text_field :number%>
+      <%= f.label :Телефон %>
+      <%= f.text_field :number %>
 
-    <%= f.submit "Create" %>
-  </div>
+      <span>
+      <%= f.submit "Создать", :class => 'link' %>
+        <%= link_to "Отмена", bouquets_path, :class => 'link_negative' %>
+    </span>
+    </div>
 
-<%end %>
+  <% end %>
+</div>

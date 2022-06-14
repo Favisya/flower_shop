@@ -125,9 +125,11 @@ class BouquetsController < ApplicationController
 
     if current_user.role.access == 1
       @bouquet = Bouquet.all
+      @bouquet.sort
     end
     if current_user.role.access == 2 || current_user.role.access == 3
       @bouquet = Bouquet.where(shop_id: current_user.shop_point)
+      @bouquet.sort
     end
   end
 
