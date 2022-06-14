@@ -1,4 +1,4 @@
-<%= link_to 'go back', bouquets_path %>
+<%= link_to 'Go back', bouquets_path %>
 <div>
   current bouquet
 </div>
@@ -44,37 +44,41 @@
     <% if @bouquet.sold == false %>
       <th>flowers in bouquet
         <%= link_to 'remove all', { controller: :bouquets, action: :remove_all } %>
+        <%= link_to 'save', "/save/" + @bouquet.id.to_s, { controller: :bouquets, action: :save } %>
       </th>
     <% else %>
     <% end %>
   </tr>
   </thead>
   <tbody>
-  <% @bouquet.flowers.each do |bouquet| %>
+  <% @bouquet.flowers.each do |flower| %>
     <tr>
       <td>
-        Name:
-        <%= bouquet.name %>
+        <%= flower.name %>
       </td>
       <td>
         Price:
-        <%= bouquet.price %>
+        <%= flower.price %>
       </td>
       <td>
-        Quatnity:
+        Quantity:
         <% if @bouquet.sold == false %>
-          <%= link_to '-', "/minus/" + bouquet.id.to_s, { controller: :bouquets, action: :minus } %>
+          <%= link_to '-', "/minus/" + flower.id.to_s, { controller: :bouquets, action: :minus } %>
 
-          <%= BouquetsFlowersJoin.find_by(flower_id: bouquet.id, bouquet_id: $current_bouquet.id).counter %>
+          <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
 
-          <%= link_to '+', "/plus/" + bouquet.id.to_s, { controller: :bouquets, action: :plus } %>
+          <%= link_to '+', "/plus/" + flower.id.to_s, { controller: :bouquets, action: :plus } %>
         <% else %>
-          <%= BouquetsFlowersJoin.find_by(flower_id: bouquet.id, bouquet_id: $current_bouquet.id).counter %>
+          <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
         <% end %>
       </td>
       <% if @bouquet.sold == false %>
         <td>
-          <%= link_to 'remove', "/remove/" + bouquet.id.to_s, { controller: :bouquets, action: :remove } %>
+          Available:
+          <%= flower.num - @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
+        </td>
+        <td>
+          <%= link_to 'remove', "/remove/" + flower.id.to_s, { controller: :bouquets, action: :remove } %>
         </td>
       <% else %>
 
@@ -120,6 +124,4 @@
     <% end %>
     </tbody>
   </table>
-
-
 <% end %>

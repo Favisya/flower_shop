@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
 
   before_action :require_login
-  before_action :admin_user
+  flag = 0
 
-  def admin_user
+  if flag == 0
     i = 1
-    array = ["","Main admin", "Shop admin", "Flower expert"]
+    array = ["", "Main admin", "Shop admin", "Flower expert"]
     while i < 4
 
       role = Role.new
@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
     user.role_id = 1
     user.save
 
+    flag = 1
   end
 
   def require_login

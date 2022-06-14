@@ -63,6 +63,7 @@ class BouquetsController < ApplicationController
     flowerApi
     $current_bouquet = @bouquet
     @flower = Flower.all
+    @counters = BouquetsFlowersJoin.all
     size = @bouquet.flowers.size
 
     full_price = 0
@@ -79,7 +80,6 @@ class BouquetsController < ApplicationController
 
     @finder = Flower.search(params[:search])
   end
-
   def plus
     @flower = Flower.find(params[:id])
     if BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id).counter < @flower.num
@@ -98,6 +98,13 @@ class BouquetsController < ApplicationController
       object = BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id)
       object.update_attribute(:counter, newCount)
     end
+
+    redirect_to ($current_bouquet)
+  end
+
+  def save
+    @bouquet = Bouquet.find(params[:id])
+    objects = BouquetsFlowersJoin.where(bouquet_id: @bouquet.id)
 
     redirect_to ($current_bouquet)
   end

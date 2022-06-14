@@ -15,10 +15,12 @@
   Email: <%=@current_user.email %>
 </div>
 <div>
+  session: <%=session[@current_user.id] %>
   Id: <%=@current_user.id %>
 </div>
 <div>
   Shop id: <%=@current_user.shop_point %>
 </div>
-<%= link_to "Sign out", sessions_path, :method=> :delete %>
+<%= button_to "Log out", logout_path, :method=> :delete %>
 <%= link_to 'admin panel', admin_url %>
+<%= link_to 'Bouquets', bouquets_path %>
