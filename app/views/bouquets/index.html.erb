@@ -42,20 +42,20 @@
       <td>
         <% if bouquet.sold == false %>
           <span style="color: darkslategray">
-            Not sold
+            Еще не продан
           </span>
         <% else %>
         <span style="color: green">
-            Sold
+            Продан
           </span>
         <% end %>
       </td>
       <td>
-        <%= link_to "show", bouquet_path(bouquet), :class => 'link' %>
+        <%= link_to "Показать букет", bouquet_path(bouquet), :class => 'link' %>
       </td>
       <td>
         <% if bouquet.sold == false %>
-          <%= button_to 'Destroy', bouquet_path(bouquet), :method => :delete, data: { confirm: 'are u sure?' }, :class => 'link_negative' %>
+          <%= button_to 'Удалить букет', bouquet_path(bouquet), :method => :delete, data: { confirm: 'are u sure?' }, :class => 'link_negative' %>
         <% end %>
       </td>
     </tr>
