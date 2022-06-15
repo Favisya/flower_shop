@@ -9,9 +9,11 @@ class UsersController < ApplicationController
 
     if current_user.role.access == 1
       @user = User.all
+      @user = @user.sort_by { |id |id.shop_point  }
     end
     if current_user.role.access == 2
       @user = User.where(shop_point: current_user.shop_point)
+      @user = @user.sort_by { |id |id.shop_point  }
     end
     if current_user.role.access != 2 && current_user.role.access != 1
       redirect_to profile_path
