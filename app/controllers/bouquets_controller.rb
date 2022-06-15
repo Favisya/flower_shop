@@ -125,11 +125,12 @@ class BouquetsController < ApplicationController
 
     if current_user.role.access == 1
       @bouquet = Bouquet.all
-      @bouquet.sort
+      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
     end
     if current_user.role.access == 2 || current_user.role.access == 3
       @bouquet = Bouquet.where(shop_id: current_user.shop_point)
-      @bouquet.sort
+      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
+      
     end
   end
 

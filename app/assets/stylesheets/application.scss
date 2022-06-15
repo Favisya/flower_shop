@@ -28,7 +28,6 @@ body{
 }
 
 .form{
-  position: relative;
   margin: 100px auto;
   width: 60%;
   height: 70%;
@@ -39,7 +38,8 @@ body{
 }
 .form_items{
   justify-content: center;
- justify-items: center;
+  justify-items: center;
+  align-content: center;
   display: flex;
   flex-direction: column;
   width: 50%;
