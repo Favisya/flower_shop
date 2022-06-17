@@ -61,11 +61,11 @@ class BouquetsController < ApplicationController
 
   def bouquets_on_vitrine
     if current_user.role.access == 1
-      @bouquet = Bouquet.where(:vitrine => true)
+      @bouquet = Bouquet.where(:vitrine => true, :sold => false)
       @bouquet = @bouquet.sort_by { |obj |-obj.id  }
     end
     if current_user.role.access == 2 || current_user.role.access == 3
-      @bouquet = Bouquet.where(shop_id: current_user.shop_point,:vitrine => true)
+      @bouquet = Bouquet.where(shop_id: current_user.shop_point,:vitrine => true, :sold => false)
       @bouquet = @bouquet.sort_by { |obj |-obj.id  }
     end
   end
@@ -87,6 +87,7 @@ class BouquetsController < ApplicationController
       i += 1
     end
 
+    $current_bouquet.update_attribute(:price , full_price)
     @price = full_price
 
     @finder = Flower.search(params[:search])
@@ -126,9 +127,10 @@ class BouquetsController < ApplicationController
 
     @bouquet = Bouquet.find(params[:id])
     $current_bouquet.update_attribute(:vitrine, true)
-    $current_bouquet.update_attribute(:name , "Витринный образец")
+    #$current_bouquet.update_attribute(:name , "Витринный образец")
     $current_bouquet.update_attribute(:number , "-")
     $current_bouquet.update_attribute(:address , "-")
+
 
     redirect_to ($current_bouquet)
   end

@@ -11,6 +11,7 @@
     <th>ID</th>
     <th>Время создания</th>
     <th>Адрес заказчика</th>
+    <th>Цена</th>
     <th>Продан?</th>
     <th>На витрине?</th>
     <th>Показать</th>
@@ -28,8 +29,11 @@
         <%= bouquet.created_at %>
       </td>
       <td>
-
         <%= bouquet.address %>
+      </td>
+      <td>
+        <%= bouquet.price %>
+        р
       </td>
       <td>
         <% if bouquet.sold == false %>
@@ -50,9 +54,6 @@
         <% else %>
         <span style="color: green">
           Да
-          <%if bouquet.sold == false %>
-          <%= link_to 'Продать', { controller: :bouquets, action: :sold }, :class => 'link' %>
-            <%end %>
           </span>
         <% end %>
       </td>

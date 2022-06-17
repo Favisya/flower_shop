@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_03_124553) do
     t.string "number"
     t.string "name"
     t.string "shop_id"
+    t.integer "price", default: 0
     t.boolean "sold", default: false
     t.boolean "vitrine", default: false
     t.datetime "created_at", null: false

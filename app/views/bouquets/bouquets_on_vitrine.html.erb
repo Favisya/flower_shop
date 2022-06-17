@@ -1,5 +1,5 @@
 <h2 style="justify-content: center;justify-items: auto">
-  <%= link_to "Профиль",profile_path, :class => 'link' %>
+  <%= link_to "Профиль", profile_path, :class => 'link' %>
   <%= link_to "Сотрудники", admin_path, :class => 'link' %>
   <%= link_to "Все букеты", bouquets_path, :class => 'link' %>
   <%= link_to "Новый Букет", new_bouquet_path, :class => 'link' %>
@@ -10,9 +10,9 @@
   <tr>
     <th>ID</th>
     <th>Время создания</th>
-
-    <th>Продан?</th>
-    <th>На витрине?</th>
+    <th>Название</th>
+    <th>Цена</th>
+    <th>Продать</th>
     <th>Показать</th>
   </tr>
   </thead>
@@ -20,35 +20,24 @@
   <% @bouquet.each do |bouquet| %>
     <tr>
       <td>
-
         <%= bouquet.id %>
       </td>
       <td>
         <%= bouquet.created_at %>
       </td>
       <td>
-        <% if bouquet.sold == false %>
-          <span style="color: darkslategray">
-            Еще не продан
-          </span>
-        <% else %>
-        <span style="color: green">
-            Продан
-          </span>
-        <% end %>
+        <%= bouquet.name %>
       </td>
       <td>
-        <% if bouquet.vitrine == false   %>
-          <span style="color: darkslategray">
-            Нет
-          </span>
+        <%= bouquet.price %>
+        р
+      </td>
+      <td>
+        <% if bouquet.vitrine == false %>
         <% else %>
-        <span style="color: green">
-          На витрине
-          <%if bouquet.sold == false %>
-          <%= link_to 'Продать', { controller: :bouquets, action: :sold }, :class => 'link' %>
-            <%end %>
-          </span>
+          <% if bouquet.sold == false %>
+            <%= link_to 'Продать', { controller: :bouquets, action: :sold }, :class => 'link' %>
+          <% end %>
         <% end %>
       </td>
       <td>
