@@ -10,9 +10,7 @@
   <tr>
     <th>ID</th>
     <th>Время создания</th>
-    <th>Имя заказчика</th>
-    <th>Адрес заказчика</th>
-    <th>Номер телефона</th>
+
     <th>Продан?</th>
     <th>На витрине?</th>
     <th>Показать</th>
@@ -27,18 +25,6 @@
       </td>
       <td>
         <%= bouquet.created_at %>
-      </td>
-      <td>
-
-        <%= bouquet.name %>
-      </td>
-      <td>
-
-        <%= bouquet.address %>
-      </td>
-      <td>
-
-        <%= bouquet.number %>
       </td>
       <td>
         <% if bouquet.sold == false %>

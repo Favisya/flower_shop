@@ -122,8 +122,13 @@ class BouquetsController < ApplicationController
   end
 
   def save
+
+
     @bouquet = Bouquet.find(params[:id])
     $current_bouquet.update_attribute(:vitrine, true)
+    $current_bouquet.update_attribute(:name , "Витринный образец")
+    $current_bouquet.update_attribute(:number , "-")
+    $current_bouquet.update_attribute(:address , "-")
 
     redirect_to ($current_bouquet)
   end

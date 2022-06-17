@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
   get "vitrine", action: :bouquets_on_vitrine, controller: 'bouquets'
   delete "logout", action: :destroy, controller: 'sessions'
+  get '/employee/:id', action: :employee, controller: 'users'
   get '/plus/:id', action: :plus, controller: 'bouquets'
   get '/minus/:id', action: :minus, controller: 'bouquets'
   get 'save/:id', action: :save, controller: 'bouquets'

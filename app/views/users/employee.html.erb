@@ -1,0 +1,36 @@
+
+<div class="main">
+  <div style="padding: 30px">
+    <h1>
+      <span>
+        Профиль сотрудника
+      </span>
+    </h1>
+    <h2>
+      Должность: <%= @user.role.position %>
+    </h2>
+    <span>
+      Фамилия: <%= @user.surname %>
+    </span>
+    <div>
+      Имя: <%= @user.name %>
+    </div>
+    <div>
+      Логин: <%= @user.login %>
+    </div>
+    <div>
+      Email: <%= @user.email %>
+    </div>
+    <div>
+      ID сотрудника: <%= @user.id %>
+    </div>
+    <div>
+      ID точки: <%= @user.shop_point %>
+    </div>
+
+    <div style="justify-content:space-between;flex-direction: row;margin-top: 10px">
+      <%= link_to 'Сотрудники', admin_url, :class => 'link' %>
+    </div>
+
+  </div>
+</div>

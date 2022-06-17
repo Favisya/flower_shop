@@ -2,6 +2,10 @@ class UsersController < ApplicationController
   before_action :require_login
   before_action :find_user, only: [:edit, :update, :destroy]
 
+  def employee
+    find_user
+  end
+
   def admin
     if session[:id] == nil
       redirect_to sessions_path

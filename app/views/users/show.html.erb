@@ -1,4 +1,3 @@
-
 <div class="main">
   <div style="padding: 30px">
     <h1>
@@ -11,22 +10,19 @@
       Должность: <%= @current_user.role.position %>
     </h2>
     <span>
-        Имя: <%= @current_user.name %>
       Фамилия: <%= @current_user.surname %>
     </span>
+    <div>
+      Имя: <%= @current_user.name %>
+    </div>
     <div>
       Логин: <%= @current_user.login %>
     </div>
     <div>
       Email: <%= @current_user.email %>
     </div>
-    <div>
-      ID точки: <%= @current_user.shop_point %>
-    </div>
     <div style="justify-content:space-between;flex-direction: row;margin-top: 10px">
-
       <%= link_to 'Сотрудники', admin_url, :class => 'link' %>
-
       <%= link_to 'Букеты', bouquets_path, :class => 'link' %>
     </div>
 

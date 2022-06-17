@@ -18,10 +18,7 @@
     <th> Должность</th>
     <th> Имя</th>
     <th> Фамилия</th>
-    <th> Логин</th>
-    <th> Почта</th>
-    <th> ID пользователя</th>
-    <th> ID точки</th>
+    <th> Показать</th>
     <th> Редактировать</th>
     <th> Удалить</th>
 
@@ -40,16 +37,7 @@
         <%= user.surname %>
       </td>
       <td>
-        <%= user.login %>
-      </td>
-      <td>
-        <%= user.email %>
-      </td>
-      <td>
-        <%= user.id %>
-      </td>
-      <td>
-        <%= user.shop_point %>
+        <%= link_to 'Показать', "/employee/" + user.id.to_s,{ controller: :users, action: :employee ,:class => 'link'}  %>
       </td>
       <td>
         <%= link_to 'Редактировать', edit_user_path(user), :class => 'link' %>
