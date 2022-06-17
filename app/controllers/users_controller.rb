@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :update, :destroy]
 
   def employee
+    if current_user.role.access != 2 && current_user.role.access != 1
+      redirect_to profile_path
+    end
     find_user
   end
 
