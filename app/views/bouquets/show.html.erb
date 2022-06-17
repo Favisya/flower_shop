@@ -65,7 +65,7 @@
     <th> Цветок</th>
     <th> Цена</th>
     <th> Количество</th>
-    <% if @bouquet.sold == false %>
+    <% if @bouquet.sold == false && @bouquet.vitrine == false %>
       <th> Доступно</th>
       <th> Удалить</th>
     <% end %>
