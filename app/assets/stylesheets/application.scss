@@ -13,18 +13,18 @@
  */
 
 body{
-  width: 100%;
+  width: 98%;
   height: 99%;
   background: #efefef;
-  position: relative;
 }
 
 .main{
-  margin:200px 600px;
+  margin: 100px auto;
+  width: 60%;
+  height: 70%;
+  padding: 30px;
   background: #d8d8d8;
   border-radius: 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .form{

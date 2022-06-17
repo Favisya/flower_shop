@@ -1,7 +1,7 @@
 <h2 style="justify-content: center;justify-items: auto">
   <%= link_to "Профиль",profile_path, :class => 'link' %>
   <%= link_to "Сотрудники", admin_path, :class => 'link' %>
-  <%= link_to "Букеты на витрине",vitrine_path , :class => 'link' %>
+  <%= link_to "Все букеты", bouquets_path, :class => 'link' %>
   <%= link_to "Новый Букет", new_bouquet_path, :class => 'link' %>
 
 </h2>
@@ -16,7 +16,6 @@
     <th>Продан?</th>
     <th>На витрине?</th>
     <th>Показать</th>
-    <th>Удалить</th>
   </tr>
   </thead>
   <tbody>
@@ -67,13 +66,9 @@
         <% end %>
       </td>
       <td>
-        <%= link_to "Показать", bouquet_path(bouquet), :class => 'link' %>
+        <%= link_to "Показать ", bouquet_path(bouquet), :class => 'link' %>
       </td>
-      <td>
-        <% if bouquet.sold == false %>
-          <%= button_to 'Удалить ', bouquet_path(bouquet), :method => :delete, data: { confirm: 'are u sure?' }, :class => 'link_negative' %>
-        <% end %>
-      </td>
+
     </tr>
   <% end %>
   </tbody>

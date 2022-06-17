@@ -1,15 +1,16 @@
 <h2>
-  <%= link_to 'Все букеты', bouquets_path, :class => 'link' %>
+  <%= link_to 'Ко всем букетам', bouquets_path, :class => 'link' %>
+  <%= link_to 'К витрине', vitrine_path, :class => 'link' %>
 </h2>
 
-<span>
+<div>
   Адрес:
   <%= @bouquet.address %>
-</span>
-<span>
+</div>
+<div>
   Номер телефона:
   <%= @bouquet.number %>
-</span>
+</div>
 <% if @bouquet.sold == false %>
   <span style="color: red;">
     Еще не продан
@@ -28,21 +29,31 @@
   ID точки:
   <%= @bouquet.shop_id %>
 </div>
-
+<span>
+  Букет на витрине?:
+  <% if @bouquet.vitrine == false %>
+  нет
+  <% else %>
+  <span style="color: green">
+    да
+  </span>
+  <% end %>
+</span>
 <div>
   Стоимость букета:
   <%= @price %>
   рублей
 </div>
+
 <h2>
-<% if @bouquet.sold == false %>
-  <%= link_to 'Продать', { controller: :bouquets, action: :sold }, :class => 'link' %>
-<% end %>
-<% if @bouquet.sold == false %>
-  <%= link_to 'Удалить все', { controller: :bouquets, action: :remove_all }, :class => 'link_negative' %>
-  <%= link_to 'Сохранить', "/save/" + @bouquet.id.to_s, { controller: :bouquets, action: :save, :class => 'link' } %>
-<% else %>
-<% end %>
+  <% if @bouquet.sold == false %>
+    <%= link_to 'Продать', { controller: :bouquets, action: :sold }, :class => 'link' %>
+  <% end %>
+  <% if @bouquet.sold == false && @bouquet.vitrine == false %>
+    <%= link_to 'На витрину', "/save/" + @bouquet.id.to_s, { controller: :bouquets, action: :save, :class => 'link' } %>
+    <%= link_to 'Удалить все', { controller: :bouquets, action: :remove_all }, :class => 'link_negative' %>
+  <% else %>
+  <% end %>
 </h2>
 <table class="table">
   <thead>
@@ -51,9 +62,9 @@
     <th> Цена</th>
     <th> Количество</th>
     <% if @bouquet.sold == false %>
-    <th> Доступно</th>
-    <th> Удалить</th>
-      <%end %>
+      <th> Доступно</th>
+      <th> Удалить</th>
+    <% end %>
     </th>
   </tr>
   </thead>
@@ -68,18 +79,18 @@
       </td>
       <td style="justify-content: center">
         <div style="justify-content: space-between">
-        <% if @bouquet.sold == false %>
-          <%= link_to '-', "/minus/" + flower.id.to_s, { controller: :bouquets, action: :minus, :class => 'link' } %>
+          <% if @bouquet.sold == false && @bouquet.vitrine == false %>
+            <%= link_to '-', "/minus/" + flower.id.to_s, { controller: :bouquets, action: :minus, :class => 'link' } %>
 
-          <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
+            <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
 
-          <%= link_to '+', "/plus/" + flower.id.to_s, { controller: :bouquets, action: :plus, :class => 'link' } %>
-        <% else %>
-          <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
-        <% end %>
+            <%= link_to '+', "/plus/" + flower.id.to_s, { controller: :bouquets, action: :plus, :class => 'link' } %>
+          <% else %>
+            <%= @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
+          <% end %>
         </div>
       </td>
-      <% if @bouquet.sold == false %>
+      <% if @bouquet.sold == false && @bouquet.vitrine == false %>
         <td>
           <%= flower.num - @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
         </td>
@@ -94,11 +105,11 @@
   </tbody>
 </table>
 
-<% if @bouquet.sold == false %>
+<% if @bouquet.sold == false && @bouquet.vitrine == false %>
   <%= form_tag bouquet_path, :method => "get" do %>
-    <%= label_tag(:search, "What flower would you like to add: ") %>
+    <%= label_tag(:search, "Какую срезку хотите добавить?: ") %>
     <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag("Search", :name => nil, :class => 'link') %>
+    <%= submit_tag("Искать", :name => nil, :class => 'link') %>
   <% end %>
   <table class="table">
     <thead>

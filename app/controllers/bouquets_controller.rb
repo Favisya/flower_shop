@@ -59,6 +59,17 @@ class BouquetsController < ApplicationController
     end
   end
 
+  def bouquets_on_vitrine
+    if current_user.role.access == 1
+      @bouquet = Bouquet.where(:vitrine => true)
+      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
+    end
+    if current_user.role.access == 2 || current_user.role.access == 3
+      @bouquet = Bouquet.where(shop_id: current_user.shop_point,:vitrine => true)
+      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
+    end
+  end
+
   def show
     flowerApi
     $current_bouquet = @bouquet
@@ -112,7 +123,7 @@ class BouquetsController < ApplicationController
 
   def save
     @bouquet = Bouquet.find(params[:id])
-    objects = BouquetsFlowersJoin.where(bouquet_id: @bouquet.id)
+    $current_bouquet.update_attribute(:vitrine, true)
 
     redirect_to ($current_bouquet)
   end
@@ -130,7 +141,6 @@ class BouquetsController < ApplicationController
     if current_user.role.access == 2 || current_user.role.access == 3
       @bouquet = Bouquet.where(shop_id: current_user.shop_point)
       @bouquet = @bouquet.sort_by { |obj |-obj.id  }
-      
     end
   end
 

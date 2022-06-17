@@ -2,12 +2,13 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   #
   resources :users, only: [:new, :create, :destroy, :edit, :update, :index]
-  resources :sessions, only: [:new,:create,:index]
+  resources :sessions, only: [:new, :create, :index]
   resources :bouquets
   jsonapi_resources :flowers
 
   root to: 'sessions#new'
-  delete "logout", action: :destroy ,controller: 'sessions'
+  get "vitrine", action: :bouquets_on_vitrine, controller: 'bouquets'
+  delete "logout", action: :destroy, controller: 'sessions'
   get '/plus/:id', action: :plus, controller: 'bouquets'
   get '/minus/:id', action: :minus, controller: 'bouquets'
   get 'save/:id', action: :save, controller: 'bouquets'
