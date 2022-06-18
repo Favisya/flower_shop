@@ -18,6 +18,7 @@ class BouquetsController < ApplicationController
     @response_size_of_elements = response["meta"]["size"]
     size = @response_size_of_elements # size of all elements
     @response_obj = response.to_s
+    b=0
 
     i = 0
     while i < size do
