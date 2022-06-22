@@ -13,7 +13,7 @@ class BouquetsController < ApplicationController
   end
 
   def flowerApi
-    auth = { username: 'admin@favis', password: 'f38341fce0' }
+    auth = { username: 'admin@favis', password: 'f38341fce0' }                                                 #Here change login and password
     response = HTTParty.get('https://online.moysklad.ru/api/remap/1.2/entity/assortment', basic_auth: auth)
     @response_size_of_elements = response["meta"]["size"]
     size = @response_size_of_elements # size of all elements
@@ -82,7 +82,7 @@ class BouquetsController < ApplicationController
     i = 0
     while i < size do
       @bouquet.flowers[i]
-      count = BouquetsFlowersJoin.find_by(flower_id: @bouquet.flowers[i].id, bouquet_id: $current_bouquet.id) # need to add count !!!
+      count = BouquetsFlowersJoin.find_by(flower_id: @bouquet.flowers[i].id, bouquet_id: $current_bouquet.id)
       full_price = full_price + @bouquet.flowers[i].price * count.counter
 
       i += 1
@@ -218,11 +218,11 @@ class BouquetsController < ApplicationController
       @Position_Request = positions.to_s
       #puts @Position_Request
 
-      auth = { username: 'admin@favis', password: 'f38341fce0' } #here change authentication
+      auth = { username: 'admin@favis', password: 'f38341fce0' }                                                                #here change login password
       @query = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/customerorder', basic_auth: auth, :body => {
         "organization": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376",        #Here change organization id
             "type": "organization",
             "mediaType": "application/json"
           }
@@ -233,7 +233,7 @@ class BouquetsController < ApplicationController
         "vatEnabled": false,
         "agent": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change organization id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b",        #Here change counterparty id
             "type": "counterparty",
             "mediaType": "application/json"
           }
@@ -249,7 +249,7 @@ class BouquetsController < ApplicationController
       @transportQuery = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/demand', basic_auth: auth, :body => {
         "organization": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376",        #Here change organization id
             "type": "organization",
             "mediaType": "application/json"
           }
@@ -260,14 +260,14 @@ class BouquetsController < ApplicationController
         "vatEnabled": false,
         "agent": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change organization id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b",        #Here change counterparty id
             "type": "counterparty",
             "mediaType": "application/json"
           }
         },
         "store": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/store/943572cc-dd05-11ec-0a80-02a70012a378",
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/store/943572cc-dd05-11ec-0a80-02a70012a378",               #Here change store id
             "type": "store",
             "mediaType": "application/json"
           }
