@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get '/employee/:id', action: :employee, controller: 'users'
   get '/plus/:id', action: :plus, controller: 'bouquets'
   get '/minus/:id', action: :minus, controller: 'bouquets'
-  get 'save/:id', action: :save, controller: 'bouquets'
+  get '/save/:id', action: :save, controller: 'bouquets'
   # get '/add/:id', action: :add_in_bouquet, controller: 'bouquets'
   get '/add/:id', to: 'bouquets#add_in_bouquet'
   get 'sold', action: :sold, controller: 'bouquets'

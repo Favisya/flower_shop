@@ -1,3 +1,4 @@
+
 <h2>
   <%= link_to 'Ко всем букетам', bouquets_path, :class => 'link' %>
   <%= link_to 'К витрине', vitrine_path, :class => 'link' %>
@@ -55,7 +56,7 @@
   <% end %>
   <% if @bouquet.sold == false && @bouquet.vitrine == false %>
     <%= link_to 'На витрину', "/save/" + @bouquet.id.to_s, { controller: :bouquets, action: :save, :class => 'link' } %>
-    <%= link_to 'Удалить все', { controller: :bouquets, action: :remove_all }, :class => 'link_negative' %>
+    <%= link_to 'Удалить все', { controller: :bouquets, action: :remove_all }, :class => 'link_negative',onclick: "return confirmDestroy('Вы уверены?')"%>
   <% else %>
   <% end %>
 </h2>
@@ -99,7 +100,7 @@
           <%= flower.num - @counters.find_by(flower_id: flower.id, bouquet_id: $current_bouquet.id).counter %>
         </td>
         <td>
-          <%= link_to 'Удалить из букета', "/remove/" + flower.id.to_s, { controller: :bouquets, action: :remove, :class => 'link_negative' } %>
+          <%= link_to 'Удалить из букета', "/remove/" + flower.id.to_s, { controller: :bouquets, action: :remove, remote: true, :class => 'link_negative' } %>
         </td>
       <% else %>
 
@@ -137,10 +138,17 @@
           <%= flower.num %>
         </td>
         <td>
-          <%= link_to 'Добавить в букет', "/add/" + flower.id.to_s, { controller: :bouquets, action: :add_in_bouquet, :class => 'link' } %>
+          <%= link_to 'Добавить в букет', "/add/" + flower.id.to_s, { controller: :bouquets, action: :add_in_bouquet, :class => 'link', } %>
         </td>
       </tr>
     <% end %>
     </tbody>
   </table>
 <% end %>
+<script>
+    function confirmDestroy(message) {
+        if (!confirm(message)) {
+            return false;
+        }
+    }
+</script>

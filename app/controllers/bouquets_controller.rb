@@ -8,6 +8,7 @@ class BouquetsController < ApplicationController
   require 'httparty'
   require 'crack'
 
+
   def new
     @bouquet = Bouquet.new
   end
@@ -168,7 +169,7 @@ class BouquetsController < ApplicationController
     if $current_bouquet.sold == false
       flower = $current_bouquet.flowers.find(params[:id])
       #$current_bouquet.flowers.delete(flower)
-      $current_bouquet.flowers.delete(flower) #### Надо исправить удаление, Удаляются все одинаковеы элементы
+      $current_bouquet.flowers.delete(flower)
     end
     redirect_to($current_bouquet)
 

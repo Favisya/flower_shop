@@ -62,10 +62,17 @@
       </td>
       <td>
         <% if bouquet.sold == false %>
-          <%= button_to 'Удалить ', bouquet_path(bouquet), :method => :delete, data: { confirm: 'are u sure?' }, :class => 'link_negative' %>
+          <%= button_to 'Удалить ', bouquet_path(bouquet), :method => :delete,onclick: "return confirmDestroy('Вы уверены?')", :class => 'link_negative' %>
         <% end %>
       </td>
     </tr>
   <% end %>
   </tbody>
 </table>
+<script>
+    function confirmDestroy(message) {
+        if (!confirm(message)) {
+            return false;
+        }
+    }
+</script>

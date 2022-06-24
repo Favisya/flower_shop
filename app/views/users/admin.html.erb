@@ -44,7 +44,8 @@
       </td>
       <td>
         <% if @current_user != user %>
-        <%= button_to 'Удалить сотрудника', user, :method=> :delete, data:{confirm: 'are u sure?'}, :class => 'link_negative' %>
+        <%= button_to 'Удалить сотрудника', user, method: :delete,remote: true ,onclick: "return confirmDestroy('Вы уверены?')", :class => 'link_negative' %>
+
           <% else %>
 
           <% end %>
@@ -54,3 +55,10 @@
   <% end %>
   </tbody>
 </table>
+<script>
+    function confirmDestroy(message) {
+        if (!confirm(message)) {
+            return false;
+        }
+    }
+</script>

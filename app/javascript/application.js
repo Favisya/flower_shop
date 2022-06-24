@@ -2,3 +2,9 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "bootstrap"
+//= require jquery
+//= require jquery_ujs
+import "@hotwired/turbo-rails"
+import "@rails/ujs"
+import { Turbo } from "@hotwired/turbo-rails"
+Turbo.session.drive = false
