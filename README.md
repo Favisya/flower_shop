@@ -1,24 +1,20 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Admin system for flower shop  
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 3.0.0 
 
-* System dependencies
+* Rails 7.0.2.4
 
 * Configuration
 
 * Database creation
 
-* Database initialization
+* Database initialization(add by default User: admin)
 
-* How to run the test suite
+* integration with moysklad
 
-* Services (job queues, cache servers, search engines, etc.)
+* Role and shop_id acces for local shop or info about employee in shop
 
-* Deployment instructions
+* Deployment instructions: just run rails db:create, rails db:migrate and its ready for using  
 
-* ...
