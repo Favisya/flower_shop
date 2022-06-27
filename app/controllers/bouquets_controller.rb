@@ -6,20 +6,18 @@ class BouquetsController < ApplicationController
 
   require 'json'
   require 'httparty'
-  require 'crack'
-
+  #require 'crack'
 
   def new
     @bouquet = Bouquet.new
   end
 
   def flowerApi
-    auth = { username: 'admin@favis', password: 'f38341fce0' }                                                 #Here change login and password
+    auth = { username: 'admin@favis', password: 'f38341fce0' } #Here change login and password
     response = HTTParty.get('https://online.moysklad.ru/api/remap/1.2/entity/assortment', basic_auth: auth)
     @response_size_of_elements = response["meta"]["size"]
-    size = @response_size_of_elements # size of all elements
+    size = @response_size_of_elements #size of all elements
     @response_obj = response.to_s
-    b=0
 
     i = 0
     while i < size do
@@ -64,11 +62,11 @@ class BouquetsController < ApplicationController
   def bouquets_on_vitrine
     if current_user.role.access == 1
       @bouquet = Bouquet.where(:vitrine => true, :sold => false)
-      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
+      @bouquet = @bouquet.sort_by { |obj| -obj.id }
     end
     if current_user.role.access == 2 || current_user.role.access == 3
-      @bouquet = Bouquet.where(shop_id: current_user.shop_point,:vitrine => true, :sold => false)
-      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
+      @bouquet = Bouquet.where(shop_id: current_user.shop_point, :vitrine => true, :sold => false)
+      @bouquet = @bouquet.sort_by { |obj| -obj.id }
     end
   end
 
@@ -89,11 +87,12 @@ class BouquetsController < ApplicationController
       i += 1
     end
 
-    $current_bouquet.update_attribute(:price , full_price)
+    $current_bouquet.update_attribute(:price, full_price)
     @price = full_price
 
     @finder = Flower.search(params[:search])
   end
+
   def plus
     @flower = Flower.find(params[:id])
     if BouquetsFlowersJoin.find_by(flower_id: @flower.id, bouquet_id: $current_bouquet.id).counter < @flower.num
@@ -125,31 +124,29 @@ class BouquetsController < ApplicationController
   end
 
   def save
-
-
     @bouquet = Bouquet.find(params[:id])
     $current_bouquet.update_attribute(:vitrine, true)
-    #$current_bouquet.update_attribute(:name , "Витринный образец")
-    $current_bouquet.update_attribute(:number , "-")
-    $current_bouquet.update_attribute(:address , "-")
-
+    if $current_bouquet.name == ''
+      $current_bouquet.update_attribute(:name , "Витринный образец")
+    end
+    $current_bouquet.update_attribute(:number, "-")
+    $current_bouquet.update_attribute(:address, "-")
 
     redirect_to ($current_bouquet)
   end
 
   def index
-    flowerApi
     if session[:id] == nil
       redirect_to sessions_path
     end
 
     if current_user.role.access == 1
       @bouquet = Bouquet.all
-      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
+      @bouquet = @bouquet.sort_by { |obj| -obj.id }
     end
     if current_user.role.access == 2 || current_user.role.access == 3
       @bouquet = Bouquet.where(shop_id: current_user.shop_point)
-      @bouquet = @bouquet.sort_by { |obj |-obj.id  }
+      @bouquet = @bouquet.sort_by { |obj| -obj.id }
     end
   end
 
@@ -219,11 +216,11 @@ class BouquetsController < ApplicationController
       @Position_Request = positions.to_s
       #puts @Position_Request
 
-      auth = { username: 'admin@favis', password: 'f38341fce0' }                                                                #here change login password
+      auth = { username: 'admin@favis', password: 'f38341fce0' } #here change login password
       @query = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/customerorder', basic_auth: auth, :body => {
         "organization": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376",        #Here change organization id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
             "type": "organization",
             "mediaType": "application/json"
           }
@@ -234,7 +231,7 @@ class BouquetsController < ApplicationController
         "vatEnabled": false,
         "agent": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b",        #Here change counterparty id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change counterparty id
             "type": "counterparty",
             "mediaType": "application/json"
           }
@@ -250,7 +247,7 @@ class BouquetsController < ApplicationController
       @transportQuery = HTTParty.post('https://online.moysklad.ru/api/remap/1.2/entity/demand', basic_auth: auth, :body => {
         "organization": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376",        #Here change organization id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/9434a1b6-dd05-11ec-0a80-02a70012a376", #Here change organization id
             "type": "organization",
             "mediaType": "application/json"
           }
@@ -261,14 +258,14 @@ class BouquetsController < ApplicationController
         "vatEnabled": false,
         "agent": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b",        #Here change counterparty id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/94358a93-dd05-11ec-0a80-02a70012a37b", #Here change counterparty id
             "type": "counterparty",
             "mediaType": "application/json"
           }
         },
         "store": {
           "meta": {
-            "href": "https://online.moysklad.ru/api/remap/1.2/entity/store/943572cc-dd05-11ec-0a80-02a70012a378",               #Here change store id
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/store/943572cc-dd05-11ec-0a80-02a70012a378", #Here change store id
             "type": "store",
             "mediaType": "application/json"
           }
