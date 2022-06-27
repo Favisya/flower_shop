@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  #
+  
   resources :users, only: [:new, :create, :destroy, :edit, :update, :index]
   resources :sessions, only: [:new, :create, :index]
   resources :bouquets
-  jsonapi_resources :flowers
+  #jsonapi_resources :flowers                                                                   #flowers objects such a api
 
   root to: 'sessions#new'
   get "vitrine", action: :bouquets_on_vitrine, controller: 'bouquets'
@@ -21,6 +20,5 @@ Rails.application.routes.draw do
   get 'profile', to: 'users#show'
   get 'admin', to: 'users#admin'
   get 'flowerApi', to: 'flowers#flowerApi'
-  # Defines the root path route ("/")
-  # root "articles#index"
+  
 end
