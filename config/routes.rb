@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :destroy, :edit, :update, :index]
   resources :sessions, only: [:new, :create, :index]
   resources :bouquets
-  jsonapi_resources :flowers                                                                   #flowers objects such a api
+  #jsonapi_resources :flowers                                                                   #flowers objects such a api
 
   root to: 'sessions#new'
   get "vitrine", action: :bouquets_on_vitrine, controller: 'bouquets'
